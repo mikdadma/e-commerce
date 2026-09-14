@@ -5,45 +5,45 @@
       "name": "Brake Pad",
       "category": "Brake",
       "price": 1500,
-      "stock": 10,
+      "stock": 0,
       "description": "High quality brake pad for cars",
-      "image": "https://via.placeholder.com/300"
+      "image": "https://placehold.co/300x200?text=Brake+Pad"
     },
     {
       "id": "2",
       "name": "Engine Oil",
       "category": "Engine",
       "price": 2200,
-      "stock": 15,
+      "stock": 4,
       "description": "Premium engine oil for better engine performance",
-      "image": "https://via.placeholder.com/300"
+      "image": "https://placehold.co/300x200?text=Engine+Oil"
     },
     {
       "id": "3",
       "name": "Air Filter",
       "category": "Engine",
       "price": 800,
-      "stock": 20,
+      "stock": 13,
       "description": "High performance air filter",
-      "image": "https://via.placeholder.com/300"
+      "image": "https://placehold.co/300x200?text=Air+Filter"
     },
     {
       "id": "4",
       "name": "Spark Plug",
       "category": "Engine",
       "price": 500,
-      "stock": 25,
+      "stock": 24,
       "description": "Reliable spark plug for smooth engine operation",
-      "image": "https://via.placeholder.com/300"
+      "image": "https://placehold.co/300x200?text=Spark+Plug"
     },
     {
       "id": "5",
       "name": "Car Battery",
       "category": "Electrical",
       "price": 5500,
-      "stock": 5,
+      "stock": 0,
       "description": "Durable car battery with reliable performance",
-      "image": "https://via.placeholder.com/300"
+      "image": "https://placehold.co/300x200?text=Car+Battery"
     }
   ],
   "users": [
@@ -64,8 +64,46 @@
       "email": "",
       "password": "",
       "id": "EcinXPxUesg"
+    },
+    {
+      "name": "sinan",
+      "email": "sinan@123",
+      "password": "sinan123",
+      "id": "gIMVNVY4A6s"
+    },
+    {
+      "name": "mikku",
+      "email": "mikdad123@gmail.com",
+      "password": "mikkumikku",
+      "id": "Hj74uXgMq3U"
+    },
+    {
+      "name": "midilaj",
+      "email": "midilaj@gmail.com",
+      "password": "midilaj123",
+      "id": "GVPcYxwdfRg"
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "2",
+          "name": "Engine Oil",
+          "category": "Engine",
+          "price": 2200,
+          "stock": 5,
+          "description": "Premium engine oil for better engine performance",
+          "image": "https://placehold.co/300x200?text=Engine+Oil",
+          "quantity": 1
+        }
+      ],
+      "total": 2200,
+      "date": "2026-09-14T12:38:21.916Z",
+      "status": "Placed",
+      "id": "d83y6JfhUdI"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
