@@ -17,3 +17,13 @@ export const loginUser = async (email, password) => {
 
   return response.data;
 };
+
+export const updateUser = async (id, user) => {
+  const response = await api.patch(`/users/${id}`, user);
+  return response.data;
+};
+
+export const deleteUser = async (id) => {
+  const response = await api.delete(`/users/${id}`);
+  return response.data;
+};
