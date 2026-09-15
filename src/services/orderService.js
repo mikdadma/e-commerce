@@ -9,3 +9,13 @@ export const createOrder = async (order) => {
   const response = await api.post("/orders", order);
   return response.data;
 };
+
+export const updateOrder = async (id, order) => {
+  const response = await api.patch(`/orders/${id}`, order);
+  return response.data;
+};
+
+export const deleteOrder = async (id) => {
+  const response = await api.delete(`/orders/${id}`);
+  return response.data;
+};

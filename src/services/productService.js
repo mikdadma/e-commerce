@@ -9,3 +9,16 @@ export const getProductById = async (id) => {
   const response = await api.get(`/products/${id}`);
   return response.data;
 };
+
+export const updateProductStock = async (id, stock) => {
+  const response = await api.patch(`/products/${id}`, {
+    stock: stock
+  });
+
+  return response.data;
+};
+
+export const deleteProduct = async (id) => {
+  const response = await api.delete(`/products/${id}`);
+  return response.data;
+};
