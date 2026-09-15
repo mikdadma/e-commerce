@@ -6,10 +6,18 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+import Profile from "./pages/Profile";
+import Wishlist from "./pages/Wishlist";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/Orders";
+import Navbar from "./components/Navbar";
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
   return (
     <BrowserRouter>
+    {user && <Navbar />}
       <Routes>
        <Route
             path="/"
@@ -37,6 +45,33 @@ function App() {
               }
             />
 
+            <Route
+                   path="/checkout"
+               element={
+                    <ProtectedRoute>
+                       <Checkout />
+              </ProtectedRoute>
+             }
+            />
+
+            <Route
+                    path="/wishlist"
+                    element={
+                   <ProtectedRoute>
+                      <Wishlist />
+                    </ProtectedRoute>
+                   }
+            />
+
+            <Route
+                    path="/orders"
+                    element={
+                    <ProtectedRoute>
+                      <Orders />
+                    </ProtectedRoute>
+                 }
+            />
+
                     <Route
                         path="/login"
                         element={
@@ -54,6 +89,15 @@ function App() {
               </PublicRoute>
             }
           />
+
+             <Route
+                  path="/profile"
+                     element={
+             <ProtectedRoute>
+                  <Profile />
+             </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );
