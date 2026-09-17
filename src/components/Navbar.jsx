@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { logout } from "../redux/slices/authSlice";
+import { clearCartState } from "../redux/slices/cartSlice";
+import { clearWishlistState } from "../redux/slices/wishlistSlice";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -16,22 +18,22 @@ function Navbar() {
     (state) => state.wishlist.items
   );
 
-  const cartCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  const cartCount = cartItems.length;
 
   const handleLogout = () => {
-    const confirmLogout = window.confirm(
-      "Are you sure you want to logout?"
-    );
+  const confirmLogout = window.confirm(
+    "Are you sure you want to logout?"
+  );
 
-    if (confirmLogout) {
-      dispatch(logout());
-      navigate("/login");
-      setMenuOpen(false);
-    }
-  };
+  if (confirmLogout) {
+    dispatch(logout());
+
+    dispatch(clearCartState());
+    dispatch(clearWishlistState());
+
+    navigate("/login");
+  }
+};
 
   const closeMenu = () => {
     setMenuOpen(false);

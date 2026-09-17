@@ -3,6 +3,8 @@ import { loginUser } from "../services/userService";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/authSlice";
+import { setCartItems } from "../redux/slices/cartSlice";
+import { setWishlistItems } from "../redux/slices/wishlistSlice";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -34,14 +36,25 @@ function Login() {
       }
 
       const user = users[0];
-      dispatch(setUser(user));
 
-      localStorage.setItem("user", JSON.stringify(user));
+localStorage.setItem("user", JSON.stringify(user));
 
-      console.log("Logged in user:", user);
+dispatch(setUser(user));
 
-      alert("Login successful");
-      navigate("/");
+const savedCart = localStorage.getItem(`cart_${user.email}`);
+const savedWishlist = localStorage.getItem(`wishlist_${user.email}`);
+
+dispatch(
+  setCartItems(savedCart ? JSON.parse(savedCart) : [])
+);
+
+dispatch(
+  setWishlistItems(
+    savedWishlist ? JSON.parse(savedWishlist) : []
+  )
+);
+
+navigate("/");
     } catch (error) {
       console.log(error);
       alert("Unable to login. Please try again.");
