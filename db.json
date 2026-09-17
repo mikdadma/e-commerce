@@ -5,9 +5,9 @@
       "name": "Brake Pad",
       "category": "Brake",
       "price": 1500,
-      "stock": 0,
+      "stock": 10,
       "description": "High quality brake pad for cars",
-      "image": "https://placehold.co/300x200?text=Brake+Pad"
+      "image": "/assets/ma-parts-brake-pad.jpeg"
     },
     {
       "id": "2",
@@ -16,16 +16,16 @@
       "price": 2200,
       "stock": 4,
       "description": "Premium engine oil for better engine performance",
-      "image": "https://placehold.co/300x200?text=Engine+Oil"
+      "image": "/assets/ma-parts-engine-oil.jpeg"
     },
     {
       "id": "3",
       "name": "Air Filter",
       "category": "Engine",
       "price": 800,
-      "stock": 13,
+      "stock": 12,
       "description": "High performance air filter",
-      "image": "https://placehold.co/300x200?text=Air+Filter"
+      "image": "/assets/ma-parts-air-filter.jpeg"
     },
     {
       "id": "4",
@@ -34,16 +34,79 @@
       "price": 500,
       "stock": 24,
       "description": "Reliable spark plug for smooth engine operation",
-      "image": "https://placehold.co/300x200?text=Spark+Plug"
+      "image": "/assets/ma-parts-spark-plug.jpeg"
     },
     {
       "id": "5",
       "name": "Car Battery",
       "category": "Electrical",
       "price": 5500,
-      "stock": 0,
+      "stock": 5,
       "description": "Durable car battery with reliable performance",
-      "image": "https://placehold.co/300x200?text=Car+Battery"
+      "image": "/assets/ma-parts-car-battery.jpeg"
+    },
+    {
+      "id": "6",
+      "name": "Brake Disc",
+      "category": "Brake",
+      "price": 3200,
+      "stock": 8,
+      "description": "High quality brake disc for safe braking",
+      "image": "/assets/ma-parts-brake-disc.jpeg"
+    },
+    {
+      "id": "7",
+      "name": "Brake Fluid",
+      "category": "Brake",
+      "price": 650,
+      "stock": 14,
+      "description": "Premium brake fluid for reliable braking performance",
+      "image": "/assets/ma-parts-brake-fluid.jpeg"
+    },
+    {
+      "id": "8",
+      "name": "Radiator Coolant",
+      "category": "Engine",
+      "price": 900,
+      "stock": 10,
+      "description": "High quality coolant for engine temperature control",
+      "image": "/assets/ma-parts-radiator-coolant.jpeg"
+    },
+    {
+      "id": "9",
+      "name": "Clutch Plate",
+      "category": "Engine",
+      "price": 4500,
+      "stock": 6,
+      "description": "Durable clutch plate for smooth gear shifting",
+      "image": "/assets/ma-parts-clutch-plate.jpeg"
+    },
+    {
+      "id": "10",
+      "name": "Headlight Bulb",
+      "category": "Electrical",
+      "price": 750,
+      "stock": 20,
+      "description": "Bright and reliable headlight bulb for vehicles",
+      "image": "/assets/ma-parts-headlight-bulb.jpeg"
+    },
+    {
+      "id": "11",
+      "name": "Car Horn",
+      "category": "Electrical",
+      "price": 1200,
+      "stock": 10,
+      "description": "Loud and reliable horn for cars",
+      "image": "/assets/ma-parts-car-horn.jpeg"
+    },
+    {
+      "id": "12",
+      "name": "Fuel Filter",
+      "category": "Engine",
+      "price": 700,
+      "stock": 14,
+      "description": "Efficient fuel filter for clean fuel delivery",
+      "image": "/assets/ma-parts-fuel-filter.jpeg"
     }
   ],
   "users": [
@@ -82,9 +145,72 @@
       "email": "midilaj@gmail.com",
       "password": "midilaj123",
       "id": "GVPcYxwdfRg"
+    },
+    {
+      "name": "mikdad",
+      "email": "mikdadbinmajeed@gmail.com",
+      "password": "mikdad123",
+      "id": "XgsFIku99Q4"
     }
   ],
   "orders": [
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "5",
+          "name": "Car Battery",
+          "category": "Electrical",
+          "price": 5500,
+          "stock": 5,
+          "description": "Durable car battery with reliable performance",
+          "image": "/assets/ma-parts-car-battery.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 5500,
+      "date": "2026-09-16T05:11:02.258Z",
+      "status": "Cancelled",
+      "id": "fHNH2_slt0U"
+    },
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "7",
+          "name": "Brake Fluid",
+          "category": "Brake",
+          "price": 650,
+          "stock": 15,
+          "description": "Premium brake fluid for reliable braking performance",
+          "image": "/assets/ma-parts-brake-fluid.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 650,
+      "date": "2026-09-16T07:36:59.156Z",
+      "status": "Placed",
+      "id": "LI96BNLWQv8"
+    },
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "1",
+          "name": "Brake Pad",
+          "category": "Brake",
+          "price": 1500,
+          "stock": 10,
+          "description": "High quality brake pad for cars",
+          "image": "/assets/ma-parts-brake-pad.jpeg",
+          "quantity": 3
+        }
+      ],
+      "total": 4500,
+      "date": "2026-09-17T05:43:29.354Z",
+      "status": "Cancelled",
+      "id": "J-Ido2NNu7o"
+    },
     {
       "userId": "GVPcYxwdfRg",
       "items": [
@@ -95,14 +221,14 @@
           "price": 2200,
           "stock": 5,
           "description": "Premium engine oil for better engine performance",
-          "image": "https://placehold.co/300x200?text=Engine+Oil",
+          "image": "/assets/ma-parts-engine-oil.jpeg",
           "quantity": 1
         }
       ],
       "total": 2200,
-      "date": "2026-09-14T12:38:21.916Z",
+      "date": "2026-09-17T05:50:37.228Z",
       "status": "Placed",
-      "id": "d83y6JfhUdI"
+      "id": "rCFjO0q0Dm4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
