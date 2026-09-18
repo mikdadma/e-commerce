@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/authSlice";
 import { setCartItems } from "../redux/slices/cartSlice";
 import { setWishlistItems } from "../redux/slices/wishlistSlice";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,12 +18,12 @@ function Login() {
     e.preventDefault();
 
     if (email.trim() === "" || password.trim() === "") {
-      alert("Please fill all fields");
+      toast.warning("Please fill all fields");
       return;
     }
 
     if (!email.includes("@") || !email.includes(".")) {
-      alert("Please enter a valid email");
+      toast.error("Please enter a valid email");
       return;
     }
 
@@ -31,7 +32,7 @@ function Login() {
       const users = await loginUser(email.trim(), password);
 
       if (users.length === 0) {
-        alert("Invalid email or password");
+        toast.error("Invalid email or password");
         return;
       }
 
@@ -57,7 +58,7 @@ dispatch(
 navigate("/");
     } catch (error) {
       console.log(error);
-      alert("Unable to login. Please try again.");
+      toast.error("Unable to login. Please try again.");
     } finally {
       setLoading(false);
     }

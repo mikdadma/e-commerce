@@ -6,6 +6,7 @@ import {
   getProductById,
   updateProductStock
 } from "../services/productService";
+import { toast } from "react-toastify";
 
 function Orders() {
   const user = useSelector((state) => state.auth.user);
@@ -330,12 +331,12 @@ function Orders() {
                               )
                             );
 
-                            alert(
+                            toast.success(
                               "Order cancelled successfully"
                             );
                           } catch (error) {
                             console.log(error);
-                            alert(
+                            toast.error(
                               "Failed to cancel order"
                             );
                           }

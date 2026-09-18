@@ -7,6 +7,7 @@ import { getProductById } from "../services/productService";
 import { clearCheckoutItem } from "../redux/slices/checkoutSlice";
 import { fetchProducts } from "../redux/slices/productSlice";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -82,7 +83,7 @@ function Checkout() {
         const latestProduct = await getProductById(item.id);
 
         if (latestProduct.stock < item.quantity) {
-          alert(`${item.name} does not have enough stock`);
+         toast.error(`${item.name} does not have enough stock`);
           return;
         }
       }
@@ -116,11 +117,11 @@ function Checkout() {
 
       console.log("Order created:", data);
 
-      alert("Order placed successfully");
+      toast.success("Order placed successfully");
       navigate("/orders");
     } catch (error) {
       console.log(error);
-      alert("Failed to place order");
+      toast.error("Failed to place order");
     } finally {
       setLoading(false);
     }

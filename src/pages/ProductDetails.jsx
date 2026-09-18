@@ -6,6 +6,7 @@ import { addToCart } from "../redux/slices/cartSlice";
 import { addToWishlist } from "../redux/slices/wishlistSlice";
 import { setCheckoutItem } from "../redux/slices/checkoutSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -297,7 +298,7 @@ function ProductDetails() {
                 disabled={isWishlisted}
                 onClick={() => {
                   dispatch(addToWishlist(product));
-                  alert("Added to wishlist");
+                  toast.success("Added to wishlist");
                 }}
                 className="w-full rounded-xl border border-gray-300 bg-white px-5 py-3.5 font-semibold text-gray-700 transition duration-300 hover:border-green-600 hover:text-green-600 disabled:cursor-not-allowed disabled:border-green-200 disabled:bg-green-50 disabled:text-green-700"
               >

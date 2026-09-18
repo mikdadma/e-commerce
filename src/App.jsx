@@ -12,6 +12,8 @@ import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -99,6 +101,7 @@ function App() {
   }
 />
       </Routes>
+      <ToastContainer /> 
     </BrowserRouter>
   );
 }

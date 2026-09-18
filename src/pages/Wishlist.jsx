@@ -4,6 +4,7 @@ import { addToCart } from "../redux/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { getProductById } from "../services/productService";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function Wishlist() {
   const dispatch = useDispatch();
@@ -169,7 +170,7 @@ function Wishlist() {
                             await getProductById(item.id);
 
                           if (latestProduct.stock === 0) {
-                            alert(
+                            toast.error(
                               "This product is currently out of stock"
                             );
                             return;
@@ -179,7 +180,7 @@ function Wishlist() {
                           navigate("/cart");
                         } catch (error) {
                           console.log(error);
-                          alert(
+                          toast.error(
                             "Failed to check product stock"
                           );
                         }

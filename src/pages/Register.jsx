@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { registerUser, getUsers } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Register() {
   const [name, setName] = useState("");
@@ -18,17 +19,17 @@ function Register() {
       email.trim() === "" ||
       password.trim() === ""
     ) {
-      alert("Please fill all fields");
+      toast.warning("Please fill all fields");
       return;
     }
 
     if (password.length < 8) {
-      alert("Password must be at least 8 characters");
+      toast.error("Password must be at least 8 characters");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -36,7 +37,7 @@ function Register() {
       !email.trim().includes("@") ||
       !email.trim().includes(".")
     ) {
-      alert("Please enter a valid email");
+      toast.error("Please enter a valid email");
       return;
     }
 
@@ -51,7 +52,7 @@ function Register() {
       );
 
       if (existingUser) {
-        alert("Email already registered");
+       toast.error("Email already registered");
         return;
       }
 
@@ -65,7 +66,7 @@ function Register() {
 
       console.log("Registered user:", data);
 
-      alert("Registration successful");
+      toast.success("Registration successful");
 
       setName("");
       setEmail("");
@@ -75,7 +76,7 @@ function Register() {
       navigate("/login");
     } catch (error) {
       console.log(error);
-      alert("Unable to register. Please try again.");
+      toast.error("Unable to register. Please try again.");
     } finally {
       setLoading(false);
     }

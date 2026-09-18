@@ -14,7 +14,7 @@
       "name": "Engine Oil",
       "category": "Engine",
       "price": 2200,
-      "stock": 4,
+      "stock": 3,
       "description": "Premium engine oil for better engine performance",
       "image": "/assets/ma-parts-engine-oil.jpeg"
     },
@@ -59,7 +59,7 @@
       "name": "Brake Fluid",
       "category": "Brake",
       "price": 650,
-      "stock": 14,
+      "stock": 13,
       "description": "Premium brake fluid for reliable braking performance",
       "image": "/assets/ma-parts-brake-fluid.jpeg"
     },
@@ -229,6 +229,44 @@
       "date": "2026-09-17T05:50:37.228Z",
       "status": "Placed",
       "id": "rCFjO0q0Dm4"
+    },
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "7",
+          "name": "Brake Fluid",
+          "category": "Brake",
+          "price": 650,
+          "stock": 14,
+          "description": "Premium brake fluid for reliable braking performance",
+          "image": "/assets/ma-parts-brake-fluid.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 650,
+      "date": "2026-09-18T04:18:28.559Z",
+      "status": "Placed",
+      "id": "pclTMnztZSU"
+    },
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "2",
+          "name": "Engine Oil",
+          "category": "Engine",
+          "price": 2200,
+          "stock": 4,
+          "description": "Premium engine oil for better engine performance",
+          "image": "/assets/ma-parts-engine-oil.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 2200,
+      "date": "2026-09-18T05:08:46.942Z",
+      "status": "Placed",
+      "id": "-c4yNUxKPF8"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
