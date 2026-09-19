@@ -5,7 +5,7 @@
       "name": "Brake Pad",
       "category": "Brake",
       "price": 1500,
-      "stock": 10,
+      "stock": 9,
       "description": "High quality brake pad for cars",
       "image": "/assets/ma-parts-brake-pad.jpeg"
     },
@@ -265,8 +265,36 @@
       ],
       "total": 2200,
       "date": "2026-09-18T05:08:46.942Z",
-      "status": "Placed",
+      "status": "Cancelled",
       "id": "-c4yNUxKPF8"
+    },
+    {
+      "userId": "GVPcYxwdfRg",
+      "items": [
+        {
+          "id": "1",
+          "name": "Brake Pad",
+          "category": "Brake",
+          "price": 1500,
+          "stock": 10,
+          "description": "High quality brake pad for cars",
+          "image": "/assets/ma-parts-brake-pad.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 1500,
+      "address": {
+        "name": "midilaj",
+        "phone": "7902561139",
+        "house": "ma house sivapuram",
+        "street": "sivapuram , kannur",
+        "city": "kannur",
+        "state": "kerala",
+        "pincode": "670702"
+      },
+      "date": "2026-09-19T03:50:59.325Z",
+      "status": "Placed",
+      "id": "evT7mKATydY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
