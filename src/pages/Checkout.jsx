@@ -130,7 +130,7 @@ function Checkout() {
         date: new Date().toISOString(),
         status: "Placed"
       };
-
+   
       const data = await createOrder(order);
 
       // Update stock

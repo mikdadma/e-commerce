@@ -14,7 +14,7 @@
       "name": "Engine Oil",
       "category": "Engine",
       "price": 2200,
-      "stock": 3,
+      "stock": 1,
       "description": "Premium engine oil for better engine performance",
       "image": "/assets/ma-parts-engine-oil.jpeg"
     },
@@ -32,7 +32,7 @@
       "name": "Spark Plug",
       "category": "Engine",
       "price": 500,
-      "stock": 24,
+      "stock": 14,
       "description": "Reliable spark plug for smooth engine operation",
       "image": "/assets/ma-parts-spark-plug.jpeg"
     },
@@ -151,6 +151,12 @@
       "email": "mikdadbinmajeed@gmail.com",
       "password": "mikdad123",
       "id": "XgsFIku99Q4"
+    },
+    {
+      "name": "aslam",
+      "email": "aslam@gmail.com",
+      "password": "aslam123",
+      "id": "Fs2M3ylDk4E"
     }
   ],
   "orders": [
@@ -295,6 +301,72 @@
       "date": "2026-09-19T03:50:59.325Z",
       "status": "Placed",
       "id": "evT7mKATydY"
+    },
+    {
+      "userId": "XgsFIku99Q4",
+      "items": [
+        {
+          "id": "4",
+          "name": "Spark Plug",
+          "category": "Engine",
+          "price": 500,
+          "stock": 24,
+          "description": "Reliable spark plug for smooth engine operation",
+          "image": "/assets/ma-parts-spark-plug.jpeg",
+          "quantity": 10
+        },
+        {
+          "id": "2",
+          "name": "Engine Oil",
+          "category": "Engine",
+          "price": 2200,
+          "stock": 3,
+          "description": "Premium engine oil for better engine performance",
+          "image": "/assets/ma-parts-engine-oil.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 7200,
+      "address": {
+        "name": "mikdad",
+        "phone": "7902561139",
+        "house": "ma house sivapuram",
+        "street": "sivapuram , kannur",
+        "city": "kannur",
+        "state": "kerala",
+        "pincode": "670702"
+      },
+      "date": "2026-09-19T07:39:23.987Z",
+      "status": "Placed",
+      "id": "XWKOCBiQP0k"
+    },
+    {
+      "userId": "Fs2M3ylDk4E",
+      "items": [
+        {
+          "id": "2",
+          "name": "Engine Oil",
+          "category": "Engine",
+          "price": 2200,
+          "stock": 2,
+          "description": "Premium engine oil for better engine performance",
+          "image": "/assets/ma-parts-engine-oil.jpeg",
+          "quantity": 1
+        }
+      ],
+      "total": 2200,
+      "address": {
+        "name": "aslam",
+        "phone": "7902561139",
+        "house": "ma house sivapuram",
+        "street": "sivapuram , kannur",
+        "city": "kannur",
+        "state": "kerala",
+        "pincode": "670702"
+      },
+      "date": "2026-09-19T08:37:30.719Z",
+      "status": "Placed",
+      "id": "f9Kaj732rYU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
