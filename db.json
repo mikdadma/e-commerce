@@ -14,7 +14,7 @@
       "name": "Engine Oil",
       "category": "Engine",
       "price": 2200,
-      "stock": 1,
+      "stock": 2,
       "description": "Premium engine oil for better engine performance",
       "image": "/assets/ma-parts-engine-oil.jpeg"
     },
@@ -365,7 +365,7 @@
         "pincode": "670702"
       },
       "date": "2026-09-19T08:37:30.719Z",
-      "status": "Placed",
+      "status": "Cancelled",
       "id": "f9Kaj732rYU"
     }
   ],
