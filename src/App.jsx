@@ -11,12 +11,15 @@ import Wishlist from "./pages/Wishlist";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 function App() {
-  0
+  
 
   return (
     <BrowserRouter>
@@ -105,6 +108,17 @@ function App() {
             </PublicRoute>
           }
         />
+
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        <Route
+            path="/admin"
+            element={
+            <AdminProtectedRoute>
+                  <AdminDashboard />
+            </AdminProtectedRoute>
+  }
+/>
 
       </Routes>
 

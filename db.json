@@ -369,5 +369,13 @@
       "id": "f9Kaj732rYU"
     }
   ],
+  "admins": [
+  {
+    "id": "1",
+    "name": "Admin",
+    "email": "admin@maparts.com",
+    "password": "admin123"
+  }
+],
   "$schema": "./node_modules/json-server/schema.json"
 }
