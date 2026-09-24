@@ -5,10 +5,16 @@ export const getProducts = async () => {
   return response.data;
 };
 
+export const createProduct = async (product) => {
+  const response = await api.post("/products", product);
+  return response.data;
+};
+
 export const getProductById = async (id) => {
   const response = await api.get(`/products/${id}`);
   return response.data;
 };
+
 
 export const updateProductStock = async (id, stock) => {
   const response = await api.patch(`/products/${id}`, {

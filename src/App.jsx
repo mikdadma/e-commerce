@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation
+} from "react-router-dom";
+
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
@@ -11,39 +17,38 @@ import Wishlist from "./pages/Wishlist";
 import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminProducts from "./pages/admin/AdminProducts";
 
-function App() {
-  
+
+function AppContent() {
+  const location = useLocation();
+
+  const isAdminPage = location.pathname.startsWith("/admin");
 
   return (
-    <BrowserRouter>
-
-      <Navbar />
+    <>
+      {!isAdminPage && <Navbar />}
 
       <Routes>
 
+        {/* Customer Routes */}
+
         <Route
           path="/"
-          element={
-            
-              <Products />
-            
-          }
+          element={<Products />}
         />
 
         <Route
           path="/products/:id"
-          element={
-            
-              <ProductDetails />
-            
-          }
+          element={<ProductDetails />}
         />
 
         <Route
@@ -109,21 +114,48 @@ function App() {
           }
         />
 
-        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Admin Routes */}
 
         <Route
-            path="/admin"
-            element={
+          path="/admin/login"
+          element={<AdminLogin />}
+        />
+
+        <Route
+          path="/admin"
+          element={
             <AdminProtectedRoute>
-                  <AdminDashboard />
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
             </AdminProtectedRoute>
-  }
-/>
+          }
+        />
+
+        <Route
+            path="/admin/products"
+            element={
+              <AdminProtectedRoute>
+                  <AdminLayout>
+                      <AdminProducts />
+                  </AdminLayout>
+              </AdminProtectedRoute>
+            }
+        />
 
       </Routes>
 
       <ToastContainer />
+    </>
+  );
+}
 
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

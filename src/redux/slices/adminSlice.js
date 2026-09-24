@@ -18,11 +18,12 @@ export const adminLogin = createAsyncThunk(
   }
 );
 
+const storedAdmin = localStorage.getItem("admin");
+
 const adminSlice = createSlice({
   name: "admin",
-
   initialState: {
-    admin: null,
+    admin: storedAdmin ? JSON.parse(storedAdmin) : null,
     loading: false,
     error: null
   },
