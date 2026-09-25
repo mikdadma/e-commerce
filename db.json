@@ -107,26 +107,23 @@
       "stock": 14,
       "description": "Efficient fuel filter for clean fuel delivery",
       "image": "/assets/ma-parts-fuel-filter.jpeg"
+    },
+    {
+      "name": "foglight bulb",
+      "category": "Electrical",
+      "price": 400,
+      "stock": 12,
+      "description": "good perfect exallent ",
+      "image": "https:///jfhfjhf.png",
+      "id": "4Ze8yZtkLTo"
     }
   ],
   "users": [
-    {
-      "name": "mikdad",
-      "email": "mikdad@123",
-      "password": "mikdad123",
-      "id": "5XslR6Bnzug"
-    },
     {
       "name": "zayid",
       "email": "zayid@123",
       "password": "zayid123",
       "id": "yUDgLI8v6CY"
-    },
-    {
-      "name": "",
-      "email": "",
-      "password": "",
-      "id": "EcinXPxUesg"
     },
     {
       "name": "sinan",
@@ -164,25 +161,6 @@
       "userId": "GVPcYxwdfRg",
       "items": [
         {
-          "id": "5",
-          "name": "Car Battery",
-          "category": "Electrical",
-          "price": 5500,
-          "stock": 5,
-          "description": "Durable car battery with reliable performance",
-          "image": "/assets/ma-parts-car-battery.jpeg",
-          "quantity": 1
-        }
-      ],
-      "total": 5500,
-      "date": "2026-09-16T05:11:02.258Z",
-      "status": "Cancelled",
-      "id": "fHNH2_slt0U"
-    },
-    {
-      "userId": "GVPcYxwdfRg",
-      "items": [
-        {
           "id": "7",
           "name": "Brake Fluid",
           "category": "Brake",
@@ -197,25 +175,6 @@
       "date": "2026-09-16T07:36:59.156Z",
       "status": "Placed",
       "id": "LI96BNLWQv8"
-    },
-    {
-      "userId": "GVPcYxwdfRg",
-      "items": [
-        {
-          "id": "1",
-          "name": "Brake Pad",
-          "category": "Brake",
-          "price": 1500,
-          "stock": 10,
-          "description": "High quality brake pad for cars",
-          "image": "/assets/ma-parts-brake-pad.jpeg",
-          "quantity": 3
-        }
-      ],
-      "total": 4500,
-      "date": "2026-09-17T05:43:29.354Z",
-      "status": "Cancelled",
-      "id": "J-Ido2NNu7o"
     },
     {
       "userId": "GVPcYxwdfRg",
@@ -273,34 +232,6 @@
       "date": "2026-09-18T05:08:46.942Z",
       "status": "Cancelled",
       "id": "-c4yNUxKPF8"
-    },
-    {
-      "userId": "GVPcYxwdfRg",
-      "items": [
-        {
-          "id": "1",
-          "name": "Brake Pad",
-          "category": "Brake",
-          "price": 1500,
-          "stock": 10,
-          "description": "High quality brake pad for cars",
-          "image": "/assets/ma-parts-brake-pad.jpeg",
-          "quantity": 1
-        }
-      ],
-      "total": 1500,
-      "address": {
-        "name": "midilaj",
-        "phone": "7902561139",
-        "house": "ma house sivapuram",
-        "street": "sivapuram , kannur",
-        "city": "kannur",
-        "state": "kerala",
-        "pincode": "670702"
-      },
-      "date": "2026-09-19T03:50:59.325Z",
-      "status": "Placed",
-      "id": "evT7mKATydY"
     },
     {
       "userId": "XgsFIku99Q4",

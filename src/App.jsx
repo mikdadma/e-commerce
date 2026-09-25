@@ -26,6 +26,8 @@ import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminProducts from "./pages/admin/AdminProducts";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 
 function AppContent() {
@@ -134,19 +136,39 @@ function AppContent() {
         />
 
         <Route
-            path="/admin/products"
-            element={
-              <AdminProtectedRoute>
-                  <AdminLayout>
-                      <AdminProducts />
-                  </AdminLayout>
-              </AdminProtectedRoute>
-            }
+          path="/admin/products"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminProducts />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminUsers />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/orders"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout>
+                <AdminOrders />
+              </AdminLayout>
+            </AdminProtectedRoute>
+          }
         />
 
       </Routes>
-
-      <ToastContainer />
     </>
   );
 }
@@ -155,7 +177,20 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
+
       <AppContent />
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+      />
+
     </BrowserRouter>
   );
 }

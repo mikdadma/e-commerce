@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../redux/slices/productSlice";
 import {
   createProduct,
-  deleteProduct
+  deleteProduct,
+  updateProduct
 } from "../../services/productService";
 import { toast } from "react-toastify";
 
@@ -11,6 +12,13 @@ function AdminProducts() {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
+
+  const [editProductId, setEditProductId] = useState(null);
+  const formRef = useRef(null);
+
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
+  const [sort, setSort] = useState("default");
 
   const [productData, setProductData] = useState({
     name: "",
@@ -29,10 +37,34 @@ function AdminProducts() {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
+  const filteredProducts = products
+  .filter((product) => {
+    const matchesSearch =
+      product.name.toLowerCase().includes(search.toLowerCase()) ||
+      product.category.toLowerCase().includes(search.toLowerCase());
 
+    const matchesCategory =
+      category === "all" || product.category === category;
+
+    return matchesSearch && matchesCategory;
+  })
+  .sort((a, b) => {
+    if (sort === "priceLow") {
+      return a.price - b.price;
+    }
+
+    if (sort === "priceHigh") {
+      return b.price - a.price;
+    }
+
+    if (sort === "nameAZ") {
+      return a.name.localeCompare(b.name);
+    }
+
+    return 0;
+  });
+
+  
   if (error) {
     return <p>{error}</p>;
   }
@@ -91,16 +123,47 @@ function AdminProducts() {
 
   // DELETE PRODUCT
   const handleDeleteProduct = async (id) => {
-    try {
-      await deleteProduct(id);
+  try {
+    await deleteProduct(id);
 
-      toast.success("Product deleted successfully");
+    await dispatch(fetchProducts());
 
-      dispatch(fetchProducts());
-    } catch (error) {
-      toast.error("Failed to delete product");
-    }
-  };
+    toast.success("Product deleted successfully");
+  } catch (error) {
+    toast.error("Failed to delete product");
+  }
+};
+
+// UPDATE PRODUCT
+const handleUpdateProduct = async () => {
+  try {
+    const updatedProduct = {
+      ...productData,
+      price: Number(productData.price),
+      stock: Number(productData.stock)
+    };
+
+    await updateProduct(editProductId, updatedProduct);
+
+    toast.success("Product updated successfully");
+
+    setProductData({
+      name: "",
+      category: "",
+      price: "",
+      stock: "",
+      description: "",
+      image: ""
+    });
+
+    setEditProductId(null);
+    setShowForm(false);
+
+    await dispatch(fetchProducts());
+  } catch (error) {
+    toast.error("Failed to update product");
+  }
+};
 
   return (
     <div>
@@ -114,6 +177,36 @@ function AdminProducts() {
           <p className="text-gray-500 mt-2">
             Total Products: {products.length}
           </p>
+
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search products..."
+            className="mt-4 border px-4 py-2 rounded-lg w-80"
+          />
+
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="mt-3 border px-4 py-2 rounded-lg"
+          >
+            <option value="all">All Categories</option>
+            <option value="Brake">Brake</option>
+            <option value="Engine">Engine</option>
+            <option value="Electrical">Electrical</option>
+          </select>
+
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="mt-3 border px-4 py-2 rounded-lg"
+          >
+            <option value="default">Default</option>
+            <option value="priceLow">Price: Low → High</option>
+            <option value="priceHigh">Price: High → Low</option>
+            <option value="nameAZ">Name: A → Z</option>
+          </select>
         </div>
 
         <button
@@ -126,9 +219,12 @@ function AdminProducts() {
 
       {/* Add Product Form */}
       {showForm && (
-        <div className="mt-6 bg-white p-6 rounded-xl shadow-sm">
+              <div
+            ref={formRef}
+            className="mt-6 bg-white p-6 rounded-xl shadow-sm"
+          >
           <h2 className="text-xl font-bold mb-4">
-            Add Product
+            {editProductId ? "Edit Product" : "Add Product"}
           </h2>
 
           <div className="space-y-4">
@@ -257,15 +353,26 @@ function AdminProducts() {
           <div className="flex gap-3 mt-6">
             <button
               type="button"
-              onClick={handleAddProduct}
+              onClick={editProductId ? handleUpdateProduct : handleAddProduct}
               className="bg-black text-white px-5 py-2 rounded-lg hover:bg-gray-800"
             >
-              Add Product
+              {editProductId ? "Update Product" : "Add Product"}
             </button>
 
             <button
               type="button"
-              onClick={() => setShowForm(false)}
+              onClick={() => {
+                  setShowForm(false);
+                  setEditProductId(null);
+                  setProductData({
+                    name: "",
+                    category: "",
+                    price: "",
+                    stock: "",
+                    description: "",
+                    image: ""
+                  });
+                }}
               className="bg-gray-200 px-5 py-2 rounded-lg hover:bg-gray-300"
             >
               Cancel
@@ -289,7 +396,7 @@ function AdminProducts() {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <tr
                 key={product.id}
                 className="border-t"
@@ -314,12 +421,35 @@ function AdminProducts() {
                   {product.stock}
                 </td>
 
-                {/* Delete Button */}
-                <td className="px-6 py-4">
+                {/* Action Buttons */}
+                <td className="px-6 py-4 flex gap-2">
                   <button
-                    onClick={() =>
-                      handleDeleteProduct(product.id)
-                    }
+                    type="button"
+                    onClick={() => {
+                        setEditProductId(product.id);
+                        setProductData(product);
+                        setShowForm(true);
+
+                        setTimeout(() => {
+                          formRef.current?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                          });
+                        }, 100);
+                      }}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+
+                      handleDeleteProduct(product.id);
+                    }}
                     className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                   >
                     Delete
