@@ -109,10 +109,10 @@
       "image": "/assets/ma-parts-fuel-filter.jpeg"
     },
     {
-      "name": "foglight bulb",
+      "name": "fogglight bulb",
       "category": "Electrical",
       "price": 400,
-      "stock": 12,
+      "stock": 16,
       "description": "good perfect exallent ",
       "image": "https:///jfhfjhf.png",
       "id": "4Ze8yZtkLTo"
@@ -132,7 +132,7 @@
       "id": "gIMVNVY4A6s"
     },
     {
-      "name": "mikku",
+      "name": "mikkuu",
       "email": "mikdad123@gmail.com",
       "password": "mikkumikku",
       "id": "Hj74uXgMq3U"
