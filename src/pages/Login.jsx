@@ -5,12 +5,14 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/authSlice";
 import { setCartItems } from "../redux/slices/cartSlice";
 import { setWishlistItems } from "../redux/slices/wishlistSlice";
+import { adminLogin } from "../redux/slices/adminSlice";
 import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,7 +31,37 @@ function Login() {
 
     try {
       setLoading(true);
-      const users = await loginUser(email.trim(), password);
+
+      // =========================
+      // CHECK ADMIN LOGIN FIRST
+      // =========================
+
+      try {
+        await dispatch(
+          adminLogin({
+            email: email.trim(),
+            password: password
+          })
+        ).unwrap();
+
+        toast.success("Admin login successful");
+
+        navigate("/admin");
+
+        return;
+      } catch (adminError) {
+        // Admin login failed
+        // So continue and check normal user
+      }
+
+      // =========================
+      // NORMAL USER LOGIN
+      // =========================
+
+      const users = await loginUser(
+        email.trim(),
+        password
+      );
 
       if (users.length === 0) {
         toast.error("Invalid email or password");
@@ -38,27 +70,46 @@ function Login() {
 
       const user = users[0];
 
-localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify(user)
+      );
 
-dispatch(setUser(user));
+      dispatch(setUser(user));
 
-const savedCart = localStorage.getItem(`cart_${user.email}`);
-const savedWishlist = localStorage.getItem(`wishlist_${user.email}`);
+      // Get user's saved cart
+      const savedCart = localStorage.getItem(
+        `cart_${user.email}`
+      );
 
-dispatch(
-  setCartItems(savedCart ? JSON.parse(savedCart) : [])
-);
+      // Get user's saved wishlist
+      const savedWishlist = localStorage.getItem(
+        `wishlist_${user.email}`
+      );
 
-dispatch(
-  setWishlistItems(
-    savedWishlist ? JSON.parse(savedWishlist) : []
-  )
-);
+      dispatch(
+        setCartItems(
+          savedCart ? JSON.parse(savedCart) : []
+        )
+      );
 
-navigate("/");
+      dispatch(
+        setWishlistItems(
+          savedWishlist
+            ? JSON.parse(savedWishlist)
+            : []
+        )
+      );
+
+      toast.success("Login successful");
+
+      navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error("Unable to login. Please try again.");
+
+      toast.error(
+        "Unable to login. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -71,6 +122,7 @@ navigate("/");
 
         {/* Brand */}
         <div className="mb-6 text-center">
+
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-green-600">
             M A PARTS
           </p>
@@ -82,6 +134,7 @@ navigate("/");
           <p className="mt-2 text-sm text-gray-500">
             Sign in to continue to your account.
           </p>
+
         </div>
 
         {/* Login Card */}
@@ -89,6 +142,7 @@ navigate("/");
 
           {/* Card Header */}
           <div className="mb-7">
+
             <h2 className="text-2xl font-bold text-gray-800">
               Login
             </h2>
@@ -96,6 +150,7 @@ navigate("/");
             <p className="mt-1 text-sm text-gray-500">
               Enter your account details below.
             </p>
+
           </div>
 
           <form
@@ -105,6 +160,7 @@ navigate("/");
 
             {/* Email */}
             <div>
+
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 Email Address
               </label>
@@ -112,15 +168,19 @@ navigate("/");
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 required
                 placeholder="Enter your email"
                 className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-gray-800 outline-none transition duration-300 placeholder:text-gray-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
               />
+
             </div>
 
             {/* Password */}
             <div>
+
               <label className="mb-2 block text-sm font-semibold text-gray-700">
                 Password
               </label>
@@ -128,12 +188,15 @@ navigate("/");
               <input
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
                 required
                 minLength={8}
                 placeholder="Enter your password"
                 className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-gray-800 outline-none transition duration-300 placeholder:text-gray-400 focus:border-green-500 focus:ring-4 focus:ring-green-100"
               />
+
             </div>
 
             {/* Login Button */}
@@ -142,13 +205,16 @@ navigate("/");
               disabled={loading}
               className="w-full rounded-xl bg-green-600 px-4 py-3.5 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-green-700 hover:shadow-md disabled:cursor-not-allowed disabled:bg-gray-400 disabled:shadow-none"
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading
+                ? "Logging in..."
+                : "Login"}
             </button>
 
             {/* Register */}
             <div className="border-t border-gray-100 pt-5 text-center">
 
               <p className="text-sm text-gray-600">
+
                 Don't have an account?{" "}
 
                 <Link
@@ -157,6 +223,7 @@ navigate("/");
                 >
                   Register
                 </Link>
+
               </p>
 
             </div>

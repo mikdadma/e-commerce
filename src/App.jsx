@@ -18,6 +18,7 @@ import Checkout from "./pages/Checkout";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,6 +31,8 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminOrders from "./pages/admin/AdminOrders";
 
 
+
+
 function AppContent() {
   const location = useLocation();
 
@@ -40,6 +43,8 @@ function AppContent() {
       {!isAdminPage && <Navbar />}
 
       <Routes>
+
+  
 
         {/* Customer Routes */}
 
@@ -115,6 +120,7 @@ function AppContent() {
             </PublicRoute>
           }
         />
+
 
 
         {/* Admin Routes */}
