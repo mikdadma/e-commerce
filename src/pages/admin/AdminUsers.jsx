@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
 import {
@@ -14,8 +14,6 @@ function AdminUsers() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const editFormRef = useRef(null);
-
   // =========================
   // FETCH USERS
   // =========================
@@ -30,7 +28,6 @@ function AdminUsers() {
       setUsers(response.data);
     } catch (error) {
       console.log("Failed to fetch users");
-
       setError("Failed to load users");
     } finally {
       setLoading(false);
@@ -84,16 +81,9 @@ function AdminUsers() {
   const handleEdit = (user) => {
     setEditingUser({
       id: user.id,
-      name: user.name,
-      email: user.email
+      name: user.name || "",
+      email: user.email || ""
     });
-
-    setTimeout(() => {
-      editFormRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }, 100);
   };
 
   // =========================
@@ -127,6 +117,7 @@ function AdminUsers() {
 
       await fetchUsers();
 
+      // Close modal
       setEditingUser(null);
 
       toast.success("User updated successfully");
@@ -200,6 +191,7 @@ function AdminUsers() {
         text-gray-600
       ">
         Total Users:{" "}
+
         <span className="font-bold">
           {users.length}
         </span>
@@ -575,150 +567,200 @@ function AdminUsers() {
 
 
       {/* =========================
-          EDIT USER FORM
+          EDIT USER MODAL
       ========================== */}
 
       {editingUser && (
 
         <div
-          ref={editFormRef}
           className="
-            mt-6
-            bg-white
+            fixed
+            inset-0
+            z-50
+            flex
+            items-center
+            justify-center
+            bg-black/50
             p-4
-            sm:p-6
-            rounded-xl
-            shadow-sm
           "
+          onClick={() => setEditingUser(null)}
         >
 
-          <h2 className="
-            text-xl
-            font-bold
-            mb-5
-          ">
-            Edit User
-          </h2>
+          <div
+            className="
+              w-full
+              max-w-lg
+              max-h-[90vh]
+              overflow-y-auto
+              bg-white
+              rounded-xl
+              shadow-xl
+              p-6
+            "
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
 
+            {/* MODAL HEADER */}
 
-          {/* NAME */}
-
-          <div className="mb-4">
-
-            <label className="
-              block
-              mb-1
-              font-medium
+            <div className="
+              flex
+              items-center
+              justify-between
+              mb-6
             ">
-              Name
-            </label>
 
-            <input
-              type="text"
-              value={editingUser.name}
-              onChange={(e) =>
-                setEditingUser({
-                  ...editingUser,
-                  name: e.target.value
-                })
-              }
-              placeholder="Enter name"
-              className="
-                border
-                border-gray-300
-                px-4
-                py-3
-                rounded-lg
-                w-full
-                outline-none
-                focus:ring-2
-                focus:ring-blue-400
-              "
-            />
-
-          </div>
+              <h2 className="
+                text-xl
+                sm:text-2xl
+                font-bold
+                text-gray-800
+              ">
+                Edit User
+              </h2>
 
 
-          {/* EMAIL */}
+              <button
+                type="button"
+                onClick={() =>
+                  setEditingUser(null)
+                }
+                className="
+                  text-gray-500
+                  hover:text-gray-800
+                  text-2xl
+                  leading-none
+                "
+              >
+                ×
+              </button>
 
-          <div className="mb-4">
+            </div>
 
-            <label className="
-              block
-              mb-1
-              font-medium
+
+            {/* NAME */}
+
+            <div className="mb-4">
+
+              <label className="
+                block
+                mb-1
+                font-medium
+              ">
+                Name
+              </label>
+
+              <input
+                type="text"
+                value={editingUser.name}
+                onChange={(e) =>
+                  setEditingUser({
+                    ...editingUser,
+                    name: e.target.value
+                  })
+                }
+                placeholder="Enter name"
+                className="
+                  border
+                  border-gray-300
+                  px-4
+                  py-3
+                  rounded-lg
+                  w-full
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-400
+                "
+              />
+
+            </div>
+
+
+            {/* EMAIL */}
+
+            <div className="mb-6">
+
+              <label className="
+                block
+                mb-1
+                font-medium
+              ">
+                Email
+              </label>
+
+              <input
+                type="email"
+                value={editingUser.email}
+                onChange={(e) =>
+                  setEditingUser({
+                    ...editingUser,
+                    email: e.target.value
+                  })
+                }
+                placeholder="Enter email"
+                className="
+                  border
+                  border-gray-300
+                  px-4
+                  py-3
+                  rounded-lg
+                  w-full
+                  outline-none
+                  focus:ring-2
+                  focus:ring-blue-400
+                "
+              />
+
+            </div>
+
+
+            {/* BUTTONS */}
+
+            <div className="
+              flex
+              flex-col
+              sm:flex-row
+              gap-3
             ">
-              Email
-            </label>
 
-            <input
-              type="email"
-              value={editingUser.email}
-              onChange={(e) =>
-                setEditingUser({
-                  ...editingUser,
-                  email: e.target.value
-                })
-              }
-              placeholder="Enter email"
-              className="
-                border
-                border-gray-300
-                px-4
-                py-3
-                rounded-lg
-                w-full
-                outline-none
-                focus:ring-2
-                focus:ring-blue-400
-              "
-            />
-
-          </div>
+              <button
+                type="button"
+                onClick={handleUpdateUser}
+                className="
+                  w-full
+                  sm:w-auto
+                  bg-green-500
+                  text-white
+                  px-5
+                  py-3
+                  rounded-lg
+                  hover:bg-green-600
+                "
+              >
+                Save Changes
+              </button>
 
 
-          {/* FORM BUTTONS */}
+              <button
+                type="button"
+                onClick={() =>
+                  setEditingUser(null)
+                }
+                className="
+                  w-full
+                  sm:w-auto
+                  bg-gray-300
+                  px-5
+                  py-3
+                  rounded-lg
+                  hover:bg-gray-400
+                "
+              >
+                Cancel
+              </button>
 
-          <div className="
-            flex
-            flex-col
-            sm:flex-row
-            gap-3
-          ">
-
-            <button
-              type="button"
-              onClick={handleUpdateUser}
-              className="
-                w-full
-                sm:w-auto
-                bg-green-500
-                text-white
-                px-5
-                py-3
-                rounded-lg
-                hover:bg-green-600
-              "
-            >
-              Save
-            </button>
-
-
-            <button
-              type="button"
-              onClick={() => setEditingUser(null)}
-              className="
-                w-full
-                sm:w-auto
-                bg-gray-300
-                px-5
-                py-3
-                rounded-lg
-                hover:bg-gray-400
-              "
-            >
-              Cancel
-            </button>
+            </div>
 
           </div>
 

@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../services/api";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
+  const [users, setUsers] = useState([]);
+
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -13,8 +15,6 @@ function AdminOrders() {
   const [error, setError] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  const orderDetailsRef = useRef(null);
 
   const ordersPerPage = 5;
 
@@ -42,6 +42,37 @@ function AdminOrders() {
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  // =========================
+  // FETCH USERS
+  // =========================
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get("/users");
+
+        setUsers(response.data);
+      } catch (error) {
+        console.log("Failed to fetch users");
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // =========================
+  // GET USER NAME
+  // =========================
+
+  const getUserName = (userId) => {
+    const user = users.find(
+      (user) =>
+        String(user.id) === String(userId)
+    );
+
+    return user ? user.name : "Unknown User";
+  };
 
   // =========================
   // SEARCH + FILTER
@@ -106,13 +137,14 @@ function AdminOrders() {
 
   const handleViewOrder = (order) => {
     setSelectedOrder(order);
+  };
 
-    setTimeout(() => {
-      orderDetailsRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }, 100);
+  // =========================
+  // CLOSE ORDER MODAL
+  // =========================
+
+  const handleCloseOrder = () => {
+    setSelectedOrder(null);
   };
 
   // =========================
@@ -157,7 +189,9 @@ function AdminOrders() {
     } catch (error) {
       console.log("Failed to update order");
 
-      toast.error("Failed to update order status");
+      toast.error(
+        "Failed to update order status"
+      );
     }
   };
 
@@ -169,19 +203,23 @@ function AdminOrders() {
       ========================== */}
 
       <div>
-        <h1 className="
-          text-2xl
-          sm:text-3xl
-          font-bold
-          text-gray-800
-        ">
+        <h1
+          className="
+            text-2xl
+            sm:text-3xl
+            font-bold
+            text-gray-800
+          "
+        >
           Orders
         </h1>
 
-        <p className="
-          text-gray-500
-          mt-2
-        ">
+        <p
+          className="
+            text-gray-500
+            mt-2
+          "
+        >
           Manage customer orders
         </p>
       </div>
@@ -191,65 +229,75 @@ function AdminOrders() {
           STATISTICS
       ========================== */}
 
-      <div className="
-        grid
-        grid-cols-1
-        sm:grid-cols-2
-        gap-4
-        mt-6
-      ">
+      <div
+        className="
+          grid
+          grid-cols-1
+          sm:grid-cols-2
+          gap-4
+          mt-6
+        "
+      >
 
         {/* Total Orders */}
 
-        <div className="
-          bg-white
-          p-5
-          rounded-xl
-          shadow-sm
-        ">
-
-          <p className="
-            text-gray-500
-            text-sm
-          ">
+        <div
+          className="
+            bg-white
+            p-5
+            rounded-xl
+            shadow-sm
+          "
+        >
+          <p
+            className="
+              text-gray-500
+              text-sm
+            "
+          >
             Total Orders
           </p>
 
-          <p className="
-            text-2xl
-            font-bold
-            mt-2
-          ">
+          <p
+            className="
+              text-2xl
+              font-bold
+              mt-2
+            "
+          >
             {orders.length}
           </p>
-
         </div>
 
 
         {/* Total Revenue */}
 
-        <div className="
-          bg-white
-          p-5
-          rounded-xl
-          shadow-sm
-        ">
-
-          <p className="
-            text-gray-500
-            text-sm
-          ">
+        <div
+          className="
+            bg-white
+            p-5
+            rounded-xl
+            shadow-sm
+          "
+        >
+          <p
+            className="
+              text-gray-500
+              text-sm
+            "
+          >
             Total Revenue
           </p>
 
-          <p className="
-            text-2xl
-            font-bold
-            mt-2
-          ">
+          <p
+            className="
+              text-2xl
+              font-bold
+              mt-2
+            "
+          >
             ₹{totalRevenue}
           </p>
-
         </div>
 
       </div>
@@ -259,13 +307,15 @@ function AdminOrders() {
           SEARCH + STATUS
       ========================== */}
 
-      <div className="
-        mt-6
-        flex
-        flex-col
-        sm:flex-row
-        gap-3
-      ">
+      <div
+        className="
+          mt-6
+          flex
+          flex-col
+          sm:flex-row
+          gap-3
+        "
+      >
 
         {/* Search */}
 
@@ -339,14 +389,16 @@ function AdminOrders() {
       ========================== */}
 
       {error && (
-        <div className="
-          mt-6
-          bg-red-100
-          text-red-600
-          px-4
-          py-3
-          rounded-lg
-        ">
+        <div
+          className="
+            mt-6
+            bg-red-100
+            text-red-600
+            px-4
+            py-3
+            rounded-lg
+          "
+        >
           {error}
         </div>
       )}
@@ -356,36 +408,42 @@ function AdminOrders() {
           MOBILE ORDER CARDS
       ========================== */}
 
-      <div className="
-        block
-        lg:hidden
-        mt-6
-        space-y-4
-      ">
+      <div
+        className="
+          block
+          lg:hidden
+          mt-6
+          space-y-4
+        "
+      >
 
         {loading ? (
 
-          <div className="
-            bg-white
-            rounded-xl
-            shadow-sm
-            p-6
-            text-center
-            text-gray-500
-          ">
+          <div
+            className="
+              bg-white
+              rounded-xl
+              shadow-sm
+              p-6
+              text-center
+              text-gray-500
+            "
+          >
             Loading orders...
           </div>
 
         ) : currentOrders.length === 0 ? (
 
-          <div className="
-            bg-white
-            rounded-xl
-            shadow-sm
-            p-6
-            text-center
-            text-gray-500
-          ">
+          <div
+            className="
+              bg-white
+              rounded-xl
+              shadow-sm
+              p-6
+              text-center
+              text-gray-500
+            "
+          >
             No orders found
           </div>
 
@@ -403,29 +461,35 @@ function AdminOrders() {
               "
             >
 
-              {/* Order ID */}
+              {/* Order ID + Status */}
 
-              <div className="
-                flex
-                justify-between
-                items-start
-                gap-3
-              ">
+              <div
+                className="
+                  flex
+                  justify-between
+                  items-start
+                  gap-3
+                "
+              >
 
                 <div className="min-w-0">
 
-                  <p className="
-                    text-xs
-                    text-gray-500
-                  ">
+                  <p
+                    className="
+                      text-xs
+                      text-gray-500
+                    "
+                  >
                     Order ID
                   </p>
 
-                  <p className="
-                    font-semibold
-                    mt-1
-                    break-all
-                  ">
+                  <p
+                    className="
+                      font-semibold
+                      mt-1
+                      break-all
+                    "
+                  >
                     {order.id}
                   </p>
 
@@ -459,29 +523,35 @@ function AdminOrders() {
               </div>
 
 
-              {/* User ID */}
+              {/* USER NAME */}
 
-              <div className="
-                mt-4
-                bg-gray-50
-                p-3
-                rounded-lg
-              ">
+              <div
+                className="
+                  mt-4
+                  bg-gray-50
+                  p-3
+                  rounded-lg
+                "
+              >
 
-                <p className="
-                  text-xs
-                  text-gray-500
-                ">
-                  User ID
+                <p
+                  className="
+                    text-xs
+                    text-gray-500
+                  "
+                >
+                  User
                 </p>
 
-                <p className="
-                  text-sm
-                  font-medium
-                  mt-1
-                  break-all
-                ">
-                  {order.userId}
+                <p
+                  className="
+                    text-sm
+                    font-medium
+                    mt-1
+                    break-words
+                  "
+                >
+                  {getUserName(order.userId)}
                 </p>
 
               </div>
@@ -489,54 +559,68 @@ function AdminOrders() {
 
               {/* Total + Date */}
 
-              <div className="
-                grid
-                grid-cols-2
-                gap-3
-                mt-3
-              ">
+              <div
+                className="
+                  grid
+                  grid-cols-2
+                  gap-3
+                  mt-3
+                "
+              >
 
-                <div className="
-                  bg-gray-50
-                  p-3
-                  rounded-lg
-                ">
+                <div
+                  className="
+                    bg-gray-50
+                    p-3
+                    rounded-lg
+                  "
+                >
 
-                  <p className="
-                    text-xs
-                    text-gray-500
-                  ">
+                  <p
+                    className="
+                      text-xs
+                      text-gray-500
+                    "
+                  >
                     Total
                   </p>
 
-                  <p className="
-                    font-semibold
-                    mt-1
-                  ">
+                  <p
+                    className="
+                      font-semibold
+                      mt-1
+                    "
+                  >
                     ₹{order.total}
                   </p>
 
                 </div>
 
 
-                <div className="
-                  bg-gray-50
-                  p-3
-                  rounded-lg
-                ">
+                <div
+                  className="
+                    bg-gray-50
+                    p-3
+                    rounded-lg
+                  "
+                >
 
-                  <p className="
-                    text-xs
-                    text-gray-500
-                  ">
+                  <p
+                    className="
+                      text-xs
+                      text-gray-500
+                    "
+                  >
                     Date
                   </p>
 
-                  <p className="
-                    font-semibold
-                    mt-1
-                    text-sm
-                  ">
+                  <p
+                    className="
+                      font-semibold
+                      mt-1
+                      text-sm
+                    "
+                  >
                     {order.date
                       ? new Date(
                           order.date
@@ -553,12 +637,14 @@ function AdminOrders() {
 
               <div className="mt-4">
 
-                <label className="
-                  block
-                  text-sm
-                  font-medium
-                  mb-1
-                ">
+                <label
+                  className="
+                    block
+                    text-sm
+                    font-medium
+                    mb-1
+                  "
+                >
                   Update Status
                 </label>
 
@@ -634,22 +720,26 @@ function AdminOrders() {
           DESKTOP ORDER TABLE
       ========================== */}
 
-      <div className="
-        hidden
-        lg:block
-        mt-6
-        bg-white
-        rounded-xl
-        shadow-sm
-        overflow-hidden
-      ">
+      <div
+        className="
+          hidden
+          lg:block
+          mt-6
+          bg-white
+          rounded-xl
+          shadow-sm
+          overflow-hidden
+        "
+      >
 
         <div className="overflow-x-auto">
 
-          <table className="
-            w-full
-            text-left
-          ">
+          <table
+            className="
+              w-full
+              text-left
+            "
+          >
 
             <thead className="bg-gray-100">
 
@@ -660,7 +750,7 @@ function AdminOrders() {
                 </th>
 
                 <th className="px-6 py-4">
-                  User ID
+                  User
                 </th>
 
                 <th className="px-6 py-4">
@@ -734,33 +824,38 @@ function AdminOrders() {
 
                     {/* Order ID */}
 
-                    <td className="
-                      px-6
-                      py-4
-                      break-all
-                    ">
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        break-all
+                      "
+                    >
                       {order.id}
                     </td>
 
 
-                    {/* User ID */}
+                    {/* USER NAME */}
 
-                    <td className="
-                      px-6
-                      py-4
-                      break-all
-                    ">
-                      {order.userId}
+                    <td
+                      className="
+                        px-6
+                        py-4
+                      "
+                    >
+                      {getUserName(order.userId)}
                     </td>
 
 
                     {/* Total */}
 
-                    <td className="
-                      px-6
-                      py-4
-                      whitespace-nowrap
-                    ">
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        whitespace-nowrap
+                      "
+                    >
                       ₹{order.total}
                     </td>
 
@@ -810,11 +905,13 @@ function AdminOrders() {
 
                     {/* Date */}
 
-                    <td className="
-                      px-6
-                      py-4
-                      whitespace-nowrap
-                    ">
+                    <td
+                      className="
+                        px-6
+                        py-4
+                        whitespace-nowrap
+                      "
+                    >
                       {order.date
                         ? new Date(
                             order.date
@@ -867,14 +964,16 @@ function AdminOrders() {
 
       {totalPages > 1 && (
 
-        <div className="
-          mt-6
-          flex
-          flex-wrap
-          items-center
-          justify-center
-          gap-2
-        ">
+        <div
+          className="
+            mt-6
+            flex
+            flex-wrap
+            items-center
+            justify-center
+            gap-2
+          "
+        >
 
           <button
             type="button"
@@ -957,312 +1056,384 @@ function AdminOrders() {
 
 
       {/* =========================
-          ORDER DETAILS
+          ORDER DETAILS MODAL
       ========================== */}
 
       {selectedOrder && (
 
         <div
-          ref={orderDetailsRef}
           className="
-            mt-6
-            bg-white
+            fixed
+            inset-0
+            z-50
+            flex
+            items-center
+            justify-center
+            bg-black/50
             p-4
-            sm:p-6
-            rounded-xl
-            shadow-sm
           "
+          onClick={handleCloseOrder}
         >
 
-          {/* Header */}
+          <div
+            className="
+              w-full
+              max-w-2xl
+              max-h-[90vh]
+              overflow-y-auto
+              bg-white
+              rounded-xl
+              shadow-xl
+              p-5
+              sm:p-6
+            "
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
 
-          <div className="
-            flex
-            flex-col
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
-            gap-3
-          ">
+            {/* Modal Header */}
 
-            <div>
-
-              <h2 className="
-                text-xl
-                sm:text-2xl
-                font-bold
-                text-gray-800
-              ">
-                Order Details
-              </h2>
-
-              <p className="
-                text-sm
-                text-gray-500
-                mt-1
-                break-all
-              ">
-                Order ID: {selectedOrder.id}
-              </p>
-
-            </div>
-
-
-            <button
-              type="button"
-              onClick={() =>
-                setSelectedOrder(null)
-              }
+            <div
               className="
-                w-full
-                sm:w-auto
-                bg-gray-200
-                px-4
-                py-2
-                rounded-lg
-                hover:bg-gray-300
+                flex
+                items-start
+                justify-between
+                gap-4
               "
             >
-              Close
-            </button>
 
-          </div>
+              <div className="min-w-0">
 
+                <h2
+                  className="
+                    text-xl
+                    sm:text-2xl
+                    font-bold
+                    text-gray-800
+                  "
+                >
+                  Order Details
+                </h2>
 
-          {/* Customer Information */}
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                    mt-1
+                    break-all
+                  "
+                >
+                  Order ID: {selectedOrder.id}
+                </p>
 
-          <div className="
-            mt-6
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            gap-4
-          ">
-
-            <div className="
-              bg-gray-50
-              p-4
-              rounded-lg
-            ">
-
-              <p className="
-                text-sm
-                text-gray-500
-              ">
-                User ID
-              </p>
-
-              <p className="
-                font-medium
-                mt-1
-                break-all
-              ">
-                {selectedOrder.userId}
-              </p>
-
-            </div>
+              </div>
 
 
-            <div className="
-              bg-gray-50
-              p-4
-              rounded-lg
-            ">
+              {/* X Button */}
 
-              <p className="
-                text-sm
-                text-gray-500
-              ">
-                Order Date
-              </p>
-
-              <p className="font-medium mt-1">
-                {selectedOrder.date
-                  ? new Date(
-                      selectedOrder.date
-                    ).toLocaleString()
-                  : "-"}
-              </p>
+              <button
+                type="button"
+                onClick={handleCloseOrder}
+                className="
+                  text-gray-500
+                  hover:text-gray-800
+                  text-2xl
+                  leading-none
+                  flex-shrink-0
+                "
+              >
+                ×
+              </button>
 
             </div>
 
 
-            <div className="
-              bg-gray-50
-              p-4
-              rounded-lg
-            ">
+            {/* Customer Information */}
 
-              <p className="
-                text-sm
-                text-gray-500
-              ">
-                Status
-              </p>
+            <div
+              className="
+                mt-6
+                grid
+                grid-cols-1
+                sm:grid-cols-2
+                gap-4
+              "
+            >
 
-              <p className="
-                font-medium
-                mt-1
-              ">
-                {selectedOrder.status}
-              </p>
+              {/* User */}
+
+              <div
+                className="
+                  bg-gray-50
+                  p-4
+                  rounded-lg
+                "
+              >
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  User
+                </p>
+
+                <p
+                  className="
+                    font-medium
+                    mt-1
+                    break-words
+                  "
+                >
+                  {getUserName(
+                    selectedOrder.userId
+                  )}
+                </p>
+
+              </div>
+
+
+              {/* Order Date */}
+
+              <div
+                className="
+                  bg-gray-50
+                  p-4
+                  rounded-lg
+                "
+              >
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  Order Date
+                </p>
+
+                <p
+                  className="
+                    font-medium
+                    mt-1
+                  "
+                >
+                  {selectedOrder.date
+                    ? new Date(
+                        selectedOrder.date
+                      ).toLocaleString()
+                    : "-"}
+                </p>
+
+              </div>
+
+
+              {/* Status */}
+
+              <div
+                className="
+                  bg-gray-50
+                  p-4
+                  rounded-lg
+                "
+              >
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  Status
+                </p>
+
+                <p
+                  className="
+                    font-medium
+                    mt-1
+                  "
+                >
+                  {selectedOrder.status}
+                </p>
+
+              </div>
+
+
+              {/* Total */}
+
+              <div
+                className="
+                  bg-gray-50
+                  p-4
+                  rounded-lg
+                "
+              >
+
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  Total
+                </p>
+
+                <p
+                  className="
+                    font-bold
+                    text-lg
+                    mt-1
+                  "
+                >
+                  ₹{selectedOrder.total}
+                </p>
+
+              </div>
 
             </div>
 
 
-            <div className="
-              bg-gray-50
-              p-4
-              rounded-lg
-            ">
+            {/* Purchased Items */}
 
-              <p className="
-                text-sm
-                text-gray-500
-              ">
-                Total
-              </p>
+            <div className="mt-6">
 
-              <p className="
-                font-bold
-                text-lg
-                mt-1
-              ">
-                ₹{selectedOrder.total}
-              </p>
-
-            </div>
-
-          </div>
+              <h3
+                className="
+                  text-lg
+                  font-bold
+                  mb-4
+                "
+              >
+                Purchased Items
+              </h3>
 
 
-          {/* Purchased Items */}
+              <div className="space-y-3">
 
-          <div className="mt-6">
+                {selectedOrder.items &&
+                selectedOrder.items.length > 0 ? (
 
-            <h3 className="
-              text-lg
-              font-bold
-              mb-4
-            ">
-              Purchased Items
-            </h3>
+                  selectedOrder.items.map(
+                    (item, index) => (
+
+                      <div
+                        key={index}
+                        className="
+                          bg-gray-50
+                          p-4
+                          rounded-lg
+                          flex
+                          flex-col
+                          sm:flex-row
+                          sm:items-center
+                          sm:justify-between
+                          gap-3
+                        "
+                      >
+
+                        <div className="min-w-0">
+
+                          <p
+                            className="
+                              font-medium
+                              break-words
+                            "
+                          >
+                            {item.name}
+                          </p>
+
+                          <p
+                            className="
+                              text-sm
+                              text-gray-500
+                              mt-1
+                            "
+                          >
+                            Quantity: {item.quantity}
+                          </p>
+
+                        </div>
 
 
-            <div className="space-y-3">
-
-              {selectedOrder.items &&
-              selectedOrder.items.length > 0 ? (
-
-                selectedOrder.items.map(
-                  (item, index) => (
-
-                    <div
-                      key={index}
-                      className="
-                        bg-gray-50
-                        p-4
-                        rounded-lg
-                        flex
-                        flex-col
-                        sm:flex-row
-                        sm:items-center
-                        sm:justify-between
-                        gap-3
-                      "
-                    >
-
-                      <div className="min-w-0">
-
-                        <p className="
-                          font-medium
-                          break-words
-                        ">
-                          {item.name}
-                        </p>
-
-                        <p className="
-                          text-sm
-                          text-gray-500
-                          mt-1
-                        ">
-                          Quantity: {item.quantity}
+                        <p
+                          className="
+                            font-semibold
+                            whitespace-nowrap
+                          "
+                        >
+                          ₹
+                          {Number(item.price) *
+                            Number(item.quantity)}
                         </p>
 
                       </div>
 
-
-                      <p className="
-                        font-semibold
-                        whitespace-nowrap
-                      ">
-                        ₹
-                        {Number(item.price) *
-                          Number(item.quantity)}
-                      </p>
-
-                    </div>
-
+                    )
                   )
-                )
 
-              ) : (
+                ) : (
 
-                <p className="text-gray-500">
-                  No items found
-                </p>
+                  <p className="text-gray-500">
+                    No items found
+                  </p>
 
-              )}
+                )}
+
+              </div>
 
             </div>
 
+
+            {/* Final Total */}
+
+            <div
+              className="
+                mt-6
+                border-t
+                pt-4
+                flex
+                justify-between
+                items-center
+              "
+            >
+
+              <span className="font-medium">
+                Total
+              </span>
+
+              <span
+                className="
+                  text-xl
+                  font-bold
+                "
+              >
+                ₹{selectedOrder.total}
+              </span>
+
+            </div>
+
+
+            {/* Close Button */}
+
+            <button
+              type="button"
+              onClick={handleCloseOrder}
+              className="
+                mt-6
+                w-full
+                bg-gray-200
+                px-4
+                py-3
+                rounded-lg
+                hover:bg-gray-300
+              "
+            >
+              Close Order Details
+            </button>
+
           </div>
-
-
-          {/* Subtotal */}
-
-          <div className="
-            mt-6
-            border-t
-            pt-4
-            flex
-            justify-between
-            items-center
-          ">
-
-            <span className="font-medium">
-              Total
-            </span>
-
-            <span className="
-              text-xl
-              font-bold
-            ">
-              ₹{selectedOrder.total}
-            </span>
-
-          </div>
-
-
-          {/* Close */}
-
-          <button
-            type="button"
-            onClick={() =>
-              setSelectedOrder(null)
-            }
-            className="
-              mt-6
-              w-full
-              bg-gray-200
-              px-4
-              py-3
-              rounded-lg
-              hover:bg-gray-300
-            "
-          >
-            Close Order Details
-          </button>
 
         </div>
 
